@@ -11,6 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install Dependencies
-        run: yarn
+        run: pnpm install
       - name: Test
-        run: yarn all
+        run: pnpm run test

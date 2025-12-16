@@ -1,5 +1,5 @@
 export function getEnv(name: string): string {
-  let value = process.env[name];
+  const value = process.env[name];
   if (typeof value === 'string') {
     return value;
   }

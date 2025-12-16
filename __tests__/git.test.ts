@@ -21,14 +21,14 @@ describe('validateHistoryDepth', () => {
 
   test('resolves with multiple commits', async () => {
     expect.assertions(0);
-    await execa('git', ['commit', '--allow-empty', '-m', 'an empty commit']);
+    await execa.execa('git', ['commit', '--allow-empty', '-m', 'an empty commit']);
     await git.validateHistoryDepth();
   });
 });
 
 describe('refExists', () => {
   test('returns true for existing refs', async () => {
-    await execa('git', ['tag', 'a-tag']);
+    await execa.execa('git', ['tag', 'a-tag']);
     expect(await git.refExists('HEAD')).toBe(true);
     expect(await git.refExists('main')).toBe(true);
     expect(await git.refExists('a-tag')).toBe(true);

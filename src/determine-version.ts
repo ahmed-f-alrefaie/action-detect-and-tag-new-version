@@ -4,13 +4,13 @@ import { getInput } from '@actions/core';
 import execa from 'execa';
 
 export async function determineVersion(): Promise<string> {
-  let command = determineVersionCommand();
-  let result = await execa.command(command, { shell: true });
+  const command = determineVersionCommand();
+  const result = await execa.execa({ shell: true })`${command}`;
   return result.stdout.trim();
 }
 
 function determineVersionCommand(): string {
-  let command = getInput('version-command');
+  const command = getInput('version-command');
   if (command) {
     return command;
   }
@@ -18,7 +18,7 @@ function determineVersionCommand(): string {
   if (existsSync('package.json')) {
     return `node -p 'require("./package.json").version'`;
   } else {
-    let gemspecs = glob('*.gemspec');
+    const gemspecs = glob('*.gemspec');
     if (gemspecs.length === 1) {
       return `ruby -e "puts Gem::Specification.load('${gemspecs[0]}').version"`;
     }

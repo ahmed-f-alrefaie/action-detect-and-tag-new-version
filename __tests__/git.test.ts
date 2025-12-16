@@ -1,5 +1,5 @@
 import * as git from '../src/git';
-import {execa} from 'execa';
+import { execa } from 'execa';
 import { runTestsInScratchDirectory } from './helpers/scratch-directory';
 import { initRepository, addAndTrackRemote } from './helpers/git';
 

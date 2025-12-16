@@ -1,7 +1,7 @@
 import { existsSync } from 'fs';
 import { sync as glob } from 'glob';
 import { getInput } from '@actions/core';
-import {execa} from 'execa';
+import { execa } from 'execa';
 
 export async function determineVersion(): Promise<string> {
   const command = determineVersionCommand();

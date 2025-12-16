@@ -1,7 +1,11 @@
 import { createDefaultEsmPreset, type JestConfigWithTsJest } from 'ts-jest';
 
 const presetConfig = createDefaultEsmPreset({
-  //...options
+  tsconfig: {
+    module: 'ESNext',
+    moduleResolution: 'bundler',
+    isolatedModules: true,
+  },
 });
 
 const jestConfig: JestConfigWithTsJest = {
@@ -16,11 +20,6 @@ const jestConfig: JestConfigWithTsJest = {
     '^(\\.\\.?\\/.+)\\.js$': '$1',
   },
   transformIgnorePatterns: [],
-  globals: {
-    'ts-jest': {
-      isolatedModules: true,
-    },
-  },
 };
 
 export default jestConfig;

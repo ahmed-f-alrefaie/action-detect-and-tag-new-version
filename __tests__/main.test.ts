@@ -3,7 +3,7 @@ import { execa, execaNode } from 'execa';
 import { runTestsInScratchDirectory } from './helpers/scratch-directory';
 import { initRepository, addAndTrackRemote } from './helpers/git';
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

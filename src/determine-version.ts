@@ -1,11 +1,11 @@
 import { existsSync } from 'fs';
 import { sync as glob } from 'glob';
 import { getInput } from '@actions/core';
-import execa from 'execa';
+import {execa} from 'execa';
 
 export async function determineVersion(): Promise<string> {
   const command = determineVersionCommand();
-  const result = await execa.execa({ shell: true })`${command}`;
+  const result = await execa({ shell: true })`${command}`;
   return result.stdout.trim();
 }
 

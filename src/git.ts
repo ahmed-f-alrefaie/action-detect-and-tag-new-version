@@ -1,8 +1,8 @@
-import execa from 'execa';
+import {execa} from 'execa';
 
 export async function validateHistoryDepth(): Promise<void> {
   try {
-    await execa.execa('git', ['rev-parse', 'HEAD~1']);
+    await execa('git', ['rev-parse', 'HEAD~1']);
   } catch {
     throw new Error(
       'This appears to be a shallow clone of your project. ' +
@@ -14,7 +14,7 @@ export async function validateHistoryDepth(): Promise<void> {
 
 export async function refExists(ref: string): Promise<boolean> {
   try {
-    await execa.execa('git', ['rev-parse', ref]);
+    await execa('git', ['rev-parse', ref]);
     return true;
   } catch {
     return false;
@@ -22,7 +22,7 @@ export async function refExists(ref: string): Promise<boolean> {
 }
 
 export async function checkout(ref: string): Promise<void> {
-  await execa.execa('git', ['checkout', ref]);
+  await execa('git', ['checkout', ref]);
 }
 
 export async function createTag(name: string, annotation: string): Promise<void> {
@@ -34,8 +34,8 @@ export async function createTag(name: string, annotation: string): Promise<void>
     tagArgs.push('-m', annotation);
   }
 
-  await execa.execa('git', tagArgs);
-  await execa.execa('git', ['push', '--tags']);
+  await execa('git', tagArgs);
+  await execa('git', ['push', '--tags']);
 }
 
 export async function ensureUserIsConfigured(): Promise<void> {
@@ -50,7 +50,7 @@ export async function ensureUserIsConfigured(): Promise<void> {
 
 export async function hasConfig(name: string): Promise<boolean> {
   try {
-    await execa.execa('git', ['config', name]);
+    await execa('git', ['config', name]);
     return true;
   } catch {
     return false;
@@ -58,5 +58,5 @@ export async function hasConfig(name: string): Promise<boolean> {
 }
 
 export async function setConfig(name: string, value: string): Promise<void> {
-  await execa.execa('git', ['config', name, value]);
+  await execa('git', ['config', name, value]);
 }

@@ -1,5 +1,5 @@
 import * as git from '../src/git';
-import execa from 'execa';
+import {execa} from 'execa';
 import { runTestsInScratchDirectory } from './helpers/scratch-directory';
 import { initRepository, addAndTrackRemote } from './helpers/git';
 
@@ -15,20 +15,20 @@ describe('validateHistoryDepth', () => {
     try {
       await git.validateHistoryDepth();
     } catch (error) {
-      expect(error.message).toMatch('shallow clone');
+      expect((error as Error).message).toMatch('shallow clone');
     }
   });
 
   test('resolves with multiple commits', async () => {
     expect.assertions(0);
-    await execa.execa('git', ['commit', '--allow-empty', '-m', 'an empty commit']);
+    await execa('git', ['commit', '--allow-empty', '-m', 'an empty commit']);
     await git.validateHistoryDepth();
   });
 });
 
 describe('refExists', () => {
   test('returns true for existing refs', async () => {
-    await execa.execa('git', ['tag', 'a-tag']);
+    await execa('git', ['tag', 'a-tag']);
     expect(await git.refExists('HEAD')).toBe(true);
     expect(await git.refExists('main')).toBe(true);
     expect(await git.refExists('a-tag')).toBe(true);

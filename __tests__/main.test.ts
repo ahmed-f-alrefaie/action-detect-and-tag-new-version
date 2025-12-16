@@ -1,7 +1,12 @@
 import fs from 'fs';
-import execa, { execaNode } from 'execa';
+import { execa, execaNode } from 'execa';
 import { runTestsInScratchDirectory } from './helpers/scratch-directory';
 import { initRepository, addAndTrackRemote } from './helpers/git';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 runTestsInScratchDirectory();
 
@@ -11,8 +16,8 @@ beforeEach(async () => {
   await initRepository(process.cwd());
 
   fs.writeFileSync('package.json', JSON.stringify({ version: '1.2.3' }));
-  await execa.execa('git', ['add', 'package.json']);
-  await execa.execa('git', ['commit', '-m', 'Add package.json']);
+  await execa('git', ['add', 'package.json']);
+  await execa('git', ['commit', '-m', 'Add package.json']);
 
   delete process.env.GITHUB_OUTPUT;
 });
@@ -27,7 +32,7 @@ describe('with a changed version', () => {
     await addAndTrackRemote('origin', 'upstream/.git');
 
     fs.writeFileSync('package.json', JSON.stringify({ version: '2.0.0' }));
-    await execa.execa('git', ['commit', '-am', 'Bump version']);
+    await execa('git', ['commit', '-am', 'Bump version']);
   });
 
   test('creates a new tag', async () => {
@@ -38,8 +43,8 @@ describe('with a changed version', () => {
     });
 
     // Ensure tags exist here and upstream
-    await execa.execa('git', ['rev-parse', 'v2.0.0']);
-    await execa.execa('git', ['rev-parse', 'v2.0.0'], { cwd: 'upstream' });
+    await execa('git', ['rev-parse', 'v2.0.0']);
+    await execa('git', ['rev-parse', 'v2.0.0'], { cwd: 'upstream' });
 
     expect(result.stdout).toMatchInlineSnapshot(`
       "Previous version: 1.2.3
@@ -76,7 +81,7 @@ describe('with a changed version', () => {
 describe('with no version change', () => {
   test('emits the same previous and current version', async () => {
     fs.writeFileSync('package.json', JSON.stringify({ version: '1.2.3', name: 'changed' }));
-    await execa.execa('git', ['commit', '-am', 'Change name']);
+    await execa('git', ['commit', '-am', 'Change name']);
 
     let result = await execaNode(`${__dirname}/../lib/main.js`, {
       env: {

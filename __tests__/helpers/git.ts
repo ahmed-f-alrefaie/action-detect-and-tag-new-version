@@ -1,5 +1,5 @@
 import fs from 'fs';
-import execa from 'execa';
+import { execa } from 'execa';
 
 export async function initRepository(dir: string): Promise<void> {
   if (!fs.existsSync(dir)) {

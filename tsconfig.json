@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "ES2022", // or `ESNext`
+    "module": "nodenext",
     "target": "ESNext",
     "moduleResolution": "nodenext",
     "outDir": "./lib", /* Redirect output structure to the directory. */
